@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Predavanja</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style>
+        #redovi:nth-child(even)
+        {
+            background-color: rgb(148, 212, 231);
+        }
+        #redovi:nth-child(odd)
+        {
+            background-color: rgb(53, 53, 187);
+        }   
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#unos").keyup(function () {
+                var value = $("#unos");
+                value = value.val().toLowerCase();
+                $("#my_table tr").filter(function() {
+                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+            });
+        });   
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            document.getElementById("ime").addEventListener("click", function (e) {
+
+
+                if (e.target && e.target.nodeName == "LI") {
+                    var ime = e.target.textContent;
+                    $("#my_table tr").filter(function () {
+                        $(this).toggle($(this).text().indexOf(ime) > -1)
+                    });
+                }
+
+
+            });
+            document.getElementById("ucionice").addEventListener("click", function (e) {
+
+                if (e.target && e.target.nodeName == "LI") {
+                    var ucionice = e.target.textContent;
+                    $("#my_table tr").filter(function () {
+                        $(this).toggle($(this).text().indexOf(ucionice) > -1)
+                    });
+                }
+
+
+            });
+        });
+
+    </script>
+</head>
+<body>
+	Pretraga:<input type="text" id="unos">
+	<table id="my_table" border="1" style="border-collapse: collapse"> 
+        <thead>
+            <tr>
+                <th>Predmet</th>
+                <th>Tip</th>
+                <th>Nastavnik</th>
+                <th>Grupe</th>
+                <th>Dan</th>
+                <th>Termin</th>
+                <th>Ucionica</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for red in redovi %}
+                <tr id="redovi" style="text-align: center">
+                    <td>{{red.split(',')[0]}}</td>
+                    <td>{{red.split(',')[1]}}</td>
+                    <td>{{red.split(',')[2]}}</td>
+                    <td>{{red.split(',')[3]}}</td>
+                    <td>{{red.split(',')[4]}}</td>
+                    <td>{{red.split(',')[5]}}</td>
+                    <td>{{red.split(',')[6]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+	<table>
+		<td>
+    	<ul id="ime" style="list-style-type: none" float="left">
+    	{% for ime in sva_imena %}
+    	<li>{{ime}}</li>
+		{% endfor %}
+		</ul>
+		</td>
+		<td></td>
+		<td>
+		<ul id="ucionice" style="list-style-type: none" float="right">
+		{% for ucionica in sve_ucionice %}
+    	<li>{{ucionica}}</li>
+		{% endfor %}
+		</ul>
+		</td>
+	</table>
+
+</body>
+</html>
